@@ -3,6 +3,8 @@ CREATE TABLE public.usuarios (
 	nome varchar NOT NULL,
 	email varchar NOT NULL,
 	senha varchar NOT NULL,
+  cpf varchar NULL,
+  telefone varchar NULL,
 	CONSTRAINT users_pk PRIMARY KEY (id),
 	CONSTRAINT users_un UNIQUE (email)
 );
