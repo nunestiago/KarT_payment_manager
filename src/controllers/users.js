@@ -81,4 +81,8 @@ const userLogin = async (req, res) => {
   }
 };
 
-module.exports = { userRegister, userLogin };
+const editUser = async (req, res) => {
+  // TODO confirmar se o edit é user ou client
+};
+
+module.exports = { userRegister, userLogin, editUser };
