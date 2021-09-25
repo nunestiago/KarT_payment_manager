@@ -4,6 +4,8 @@ const knex = require('../config/knexConnect');
 const yup = require('yup');
 const { pt } = require('yup-locales');
 const { setLocale } = require('yup');
+const testeCPF = require('../utils/cpfValidator');
+require('yup-phone');
 setLocale(pt);
 
 const userRegister = async (req, res) => {
@@ -82,7 +84,48 @@ const userLogin = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  // TODO confirmar se o edit é user ou client
+  const user = req.user;
+  const newInfo = req.body;
+
+  const schema = yup.object().shape({
+    nome: yup.string().nullable(true),
+    email: yup.string().email().nullable(true),
+    senha: yup.string().nullable(true),
+    telefone: yup.string().nullable(true),
+    cpf: yup.string().nullable(true),
+  });
+
+  try {
+    await schema.validate(newInfo);
+    if (user.email !== newInfo.email) {
+      const isEmail = await knex('usuarios').where('email', newInfo);
+      if (isEmail.length) {
+        return res.status(400).json('E-mail já cadastrado');
+      }
+    }
+
+    if (newInfo.senha) {
+      newInfo.senha = await bcrypt.hash(newInfo.senha, 10);
+    }
+
+    if (newInfo.cpf) {
+      if (!testeCPF(newInfo.cpf)) {
+        return res.status(400).json('CPF inválido');
+      }
+    }
+
+    const editUser = await knex('usuarios')
+      .update(newInfo)
+      .where('id', user.id);
+
+    if (editUser !== 1) {
+      return res.status(400).json('Não foi possível atualizar dados');
+    }
+
+    res.status(200).json('Usuário atualizado com sucesso');
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
 };
 
 module.exports = { userRegister, userLogin, editUser };
