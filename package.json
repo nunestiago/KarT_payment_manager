@@ -19,7 +19,8 @@
     "knex": "^0.95.11",
     "pg": "^8.7.1",
     "yup": "^0.32.9",
-    "yup-locales": "^1.2.0"
+    "yup-locales": "^1.2.0",
+    "yup-phone": "^1.2.19"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
