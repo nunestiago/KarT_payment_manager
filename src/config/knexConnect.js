@@ -6,6 +6,9 @@ const knex = require('knex')({
     password: '1',
     database: 'kartaccount',
   },
+  migrations: {
+    tableName: 'knex_migrations',
+  },
 });
 
 module.exports = knex;
