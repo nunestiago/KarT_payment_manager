@@ -11,6 +11,8 @@ exports.up = function (knex) {
     table.string('cidade');
     table.string('complemento');
     table.string('ponto_referencia');
+    table.timestamps(true, true);
+    table.foreign('id').references('usuarios.id').withKeyName('clientes_fk');
   });
 };
 

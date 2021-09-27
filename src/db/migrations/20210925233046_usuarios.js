@@ -6,6 +6,8 @@ exports.up = function (knex) {
     table.string('senha').notNullable();
     table.string('cpf', 11);
     table.string('telefone', 11);
+    table.timestamps(true, true);
+    table.unique('email');
   });
 };
 
