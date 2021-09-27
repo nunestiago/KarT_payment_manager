@@ -12,7 +12,10 @@ exports.up = function (knex) {
     table.string('complemento');
     table.string('ponto_referencia');
     table.timestamps(true, true);
-    table.foreign('id').references('usuarios.id').withKeyName('clientes_fk');
+    table
+      .foreign('usuario_id')
+      .references('usuarios.id')
+      .withKeyName('clientes_fk');
   });
 };
 
