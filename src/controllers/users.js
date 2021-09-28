@@ -108,10 +108,8 @@ const editUser = async (req, res) => {
       newInfo.senha = await bcrypt.hash(newInfo.senha, 10);
     }
 
-    if (newInfo.cpf) {
-      if (!testeCPF(newInfo.cpf)) {
-        return res.status(400).json('CPF inválido');
-      }
+    if (newInfo.cpf && !testeCPF(newInfo.cpf)) {
+      return res.status(400).json('CPF inválido');
     }
 
     const editUser = await knex('usuarios')
