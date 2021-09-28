@@ -1,8 +1,17 @@
 const express = require('express');
-const { test } = require('../controllers/clients');
+const { clientRegister } = require('../controllers/clients');
 
-const router = express();
+const { userRegister, userLogin, editUser } = require('../controllers/users');
+const tokenValidation = require('../middlewares/tokenValidation');
 
-router.get('/', test);
+const userRouter = express();
 
-module.exports = router;
+userRouter.post('/user/register', userRegister);
+userRouter.post('/user/login', userLogin);
+
+userRouter.use(tokenValidation);
+
+userRouter.put('/user/edit', editUser);
+userRouter.post('/client/register', clientRegister);
+
+module.exports = userRouter;
