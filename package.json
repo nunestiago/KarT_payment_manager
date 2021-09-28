@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "migrate": "npx knex migrate:latest --knexfile config/knexConnect.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/app.js"
   },
