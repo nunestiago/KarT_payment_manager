@@ -1,17 +1,20 @@
-const express = require('express');
+const router = require('express').Router();
 const { clientRegister } = require('../controllers/clients');
 
 const { userRegister, userLogin, editUser } = require('../controllers/users');
 const tokenValidation = require('../middlewares/tokenValidation');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
-const userRouter = express();
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-userRouter.post('/user/register', userRegister);
-userRouter.post('/user/login', userLogin);
+router.post('/user/register', userRegister);
+router.post('/user/login', userLogin);
 
-userRouter.use(tokenValidation);
+router.use(tokenValidation);
 
-userRouter.put('/user/edit', editUser);
-userRouter.post('/client/register', clientRegister);
+router.put('/user/edit', editUser);
+router.post('/client/register', clientRegister);
 
-module.exports = userRouter;
+module.exports = router;
