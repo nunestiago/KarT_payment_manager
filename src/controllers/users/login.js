@@ -27,6 +27,8 @@ const userLogin = async (req, res) => {
       id: foundUser.id,
       nome: foundUser.nome,
       email: foundUser.email,
+      telefone: foundUser?.telefone,
+      cpf: foundUser?.cpf,
     };
     const token = jwt.sign(userSend, jwtSecret, {
       expiresIn: process.env.TOKEN_EXPIRATION,

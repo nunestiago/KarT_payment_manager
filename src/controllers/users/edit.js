@@ -12,8 +12,9 @@ const editUser = async (req, res) => {
 
     if (user.email !== newInfo.email) {
       const isEmail = await knex('usuarios').where('email', newInfo);
-      if (isEmail.length) {
-        return res.status(400).json('E-mail já cadastrado');
+
+      if (!isEmail.length) {
+        return res.status(400).json('E-mail já já está sendo usado');
       }
     }
 
