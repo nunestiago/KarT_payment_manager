@@ -16,10 +16,13 @@ const clientRegister = async (req, res) => {
     if (isClient.length) {
       return res.status(400).json('E-mail já cadastrado.');
     }
+    client.cpf = client.cpf.replace(/[^0-9]/g, '');
 
     if (client.cpf && !testeCPF(client.cpf)) {
       return res.status(400).json('CPF inválido');
     }
+    client.telefone = client.telefone.replace(/[^0-9]/g, '');
+    client.cep = client.cep.replace(/[^0-9]/g, '');
 
     const newClient = await knex('clientes').insert(client);
 

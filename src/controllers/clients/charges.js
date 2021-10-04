@@ -11,7 +11,6 @@ const clientCharges = async (req, res) => {
     if (!getCharges.length) {
       return res.status(400).json('Nenhuma cobrança encontrada.');
     }
-    console.log(getCharges);
     return res.status(200).json(getCharges);
   } catch (error) {
     return res.status(400).json(error.message);

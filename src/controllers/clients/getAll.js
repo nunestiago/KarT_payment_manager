@@ -11,7 +11,6 @@ const clientGetAll = async (req, res) => {
     if (!getClients.length) {
       return res.status(400).json('Nenhum cliente encontrado.');
     }
-    console.log(getClients);
     return res.status(200).json(getClients);
   } catch (error) {
     return res.status(400).json(error.message);
