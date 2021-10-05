@@ -5,6 +5,7 @@ const clientGetAll = async (req, res) => {
 
   try {
     const getClients = await knex('clientes')
+      .select('clientes.id', 'clientes.nome')
       .where('usuario_id', id)
       .orderBy('id', 'asc');
 
