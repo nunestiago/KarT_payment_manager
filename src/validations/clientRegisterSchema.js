@@ -4,7 +4,7 @@ const clientRegisterSchema = yup.object().shape({
   nome: yup.string().required(),
   email: yup.string().email().required(),
   cpf: yup.string().required(),
-  telefone: yup.string().phone('BR'),
+  telefone: yup.string().required(),
   cep: yup.string().nullable(true),
   logradouro: yup.string().nullable(true),
   bairro: yup.string().nullable(true),
