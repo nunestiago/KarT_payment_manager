@@ -80,3 +80,62 @@ from
 	cobrancas c
 where
 	c.usuario_id = 20
+
+select
+	c2.id ,
+	c2.nome ,
+	c2.email ,
+	c2.cpf ,
+	c2.telefone ,
+	c2.cep ,
+	c2.logradouro ,
+	c2.bairro ,
+	c2.cidade ,
+	c2.complemento ,
+	c2.ponto_referencia,
+	sum(valor) as feitas
+from
+	cobrancas c
+left join clientes c2 on
+	c2.id = c.cliente_id
+where
+	c.usuario_id = 20
+group by
+	c.cliente_id,
+	c2.id
+
+    const getClients = await knex('cobrancas')
+      .select(
+        'clientes.id',
+        'clientes.nome',
+        'clientes.email',
+        'clientes.cpf',
+        'clientes.telefone',
+        'clientes.cep',
+        'clientes.logradouro',
+        'clientes.bairro',
+        'clientes.cidade',
+        'clientes.complemento',
+        'clientes.ponto_referencia',
+      )
+      .sum({ feitas: 'valor' })
+      .leftJoin('clientes', function () {
+        this.on('cobrancas.cliente_id', 'clientes.id').andOn(
+          'cobrancas.usuario_id',
+          id,
+        );
+      })
+      .where('cobrancas.usuario_id', id)
+      .groupBy('cobrancas.cliente_id', 'clientes.id');
+
+    const getReceived = await knex('cobrancas')
+      .select(
+        'cobrancas.cliente_id',
+        knex.raw(`
+        case
+          when cobrancas.status = true then sum(valor)
+        end as recebidas`),
+      )
+      .where('cobrancas.usuario_id', id)
+      .andWhere('cobrancas.status', true)
+      .groupBy('cobrancas.cliente_id', 'cobrancas.status');
