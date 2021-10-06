@@ -43,7 +43,7 @@ const homeInfo = async (req, res) => {
       .leftJoin('cobrancas', function () {
         this.on('cobrancas.cliente_id', 'clientes.id').andOn(
           'cobrancas.usuario_id',
-          20,
+          id,
         );
       })
       .where('clientes.usuario_id', id)
