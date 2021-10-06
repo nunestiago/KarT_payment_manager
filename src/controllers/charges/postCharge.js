@@ -8,7 +8,6 @@ const postCharge = async (req, res) => {
   try {
     await chargeRegisterSchema.validate(charge);
     charge.usuario_id = id;
-    console.log(charge);
     const newClient = await knex('cobrancas').insert(charge);
 
     if (!newClient.rowCount) {
