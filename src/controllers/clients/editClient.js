@@ -17,7 +17,6 @@ const editClient = async (req, res) => {
     const editClient = await knex('clientes')
       .update(newInfo)
       .where('id', newInfo.id);
-    console.log(editClient);
     if (editClient !== 1) {
       return res.status(400).json('Não foi possível atualizar dados');
     }
