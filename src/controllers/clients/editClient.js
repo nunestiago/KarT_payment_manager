@@ -4,8 +4,22 @@ const testeCPF = require('../../utils/cpfValidator');
 
 const editClient = async (req, res) => {
   const newInfo = req.body;
+  const { email, cpf } = newInfo;
+  const { id } = req.user;
 
   try {
+    const isClient = await knex('clientes').where({ usuario_id: id, email });
+
+    if (isClient.length) {
+      return res.status(400).json('E-mail já cadastrado.');
+    }
+
+    const isCpf = await knex('clientes').where({ usuario_id: id, cpf });
+
+    if (isCpf.length) {
+      return res.status(400).json('CPF já cadastrado.');
+    }
+
     if (newInfo.senha) {
       newInfo.senha = await bcrypt.hash(newInfo.senha, 10);
     }
