@@ -4,7 +4,7 @@ const clientGetAll = async (req, res) => {
   const { id } = req.user;
 
   try {
-    const getClients = await knex('cobrancas')
+    const getClients = await knex('clientes')
       .select(
         'clientes.id',
         'clientes.nome',
@@ -18,15 +18,7 @@ const clientGetAll = async (req, res) => {
         'clientes.complemento',
         'clientes.ponto_referencia',
       )
-      .sum({ feitas: 'valor' })
-      .leftJoin('clientes', function () {
-        this.on('cobrancas.cliente_id', 'clientes.id').andOn(
-          'cobrancas.usuario_id',
-          id,
-        );
-      })
-      .where('cobrancas.usuario_id', id)
-      .groupBy('cobrancas.cliente_id', 'clientes.id');
+      .where('clientes.usuario_id', id);
 
     const getReceived = await knex('cobrancas')
       .select(
@@ -40,10 +32,24 @@ const clientGetAll = async (req, res) => {
       .andWhere('cobrancas.status', true)
       .groupBy('cobrancas.cliente_id', 'cobrancas.status');
 
+    const getDone = await knex('cobrancas')
+      .select('cobrancas.cliente_id')
+      .sum({ feitas: 'valor' })
+      .where('cobrancas.usuario_id', id)
+      .groupBy('cobrancas.cliente_id');
+
     for (const key in getClients) {
       getReceived.find((item) =>
         item.cliente_id === getClients[key].id
-          ? (getClients[key].recebidas = item.recebidas)
+          ? (getClients[key].recebidas = item.recebidas || 0)
+          : '',
+      );
+    }
+
+    for (const key in getClients) {
+      getDone.find((item) =>
+        item.cliente_id === getClients[key].id
+          ? (getClients[key].feitas = item.feitas || 0)
           : '',
       );
     }
