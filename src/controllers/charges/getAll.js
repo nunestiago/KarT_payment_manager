@@ -2,7 +2,6 @@ const knex = require('../../config/knexConnect');
 
 const clientCharges = async (req, res) => {
   const { id } = req.user;
-  // const id = 20;
 
   try {
     const getCharges = await knex('cobrancas')
