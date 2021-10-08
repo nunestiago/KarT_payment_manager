@@ -31,15 +31,14 @@ const homeInfo = async (req, res) => {
         'clientes.id',
         knex.raw(`
         case
-          when count(cobrancas.pago_em) < count(cobrancas.vencimento) then 1
-          else 0
-        end as cliente_inadimplente,
+        when count(case when cobrancas.status then 1 end) = count(cobrancas.vencimento) then 1
+        else 0
+      end as cliente_em_dia,
         case
-          when count(cobrancas.pago_em) < count(cobrancas.vencimento) then 0
-          else 1
-        end as cliente_em_dia`),
+        when count(case when cobrancas.status then 1 end) = count(cobrancas.vencimento) then 0
+        else 1
+      end as cliente_inadimplente`),
       )
-      .count('cobrancas.pago_em as cobranca_paga')
       .leftJoin('cobrancas', function () {
         this.on('cobrancas.cliente_id', 'clientes.id').andOn(
           'cobrancas.usuario_id',
