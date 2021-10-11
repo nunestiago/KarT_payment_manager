@@ -4,7 +4,6 @@ const chargeRegisterSchema = require('../../validations/chargeRegisterSchema');
 const postCharge = async (req, res) => {
   const charge = req.body;
   const { id } = req.user;
-  console.log('POST');
   try {
     await chargeRegisterSchema.validate(charge);
     charge.usuario_id = id;
