@@ -7,6 +7,7 @@ const clientCharges = async (req, res) => {
     const getCharges = await knex('cobrancas')
       .select(
         'cobrancas.id',
+        'cobrancas.cliente_id',
         'clientes.nome',
         'cobrancas.descricao',
         'cobrancas.valor',
