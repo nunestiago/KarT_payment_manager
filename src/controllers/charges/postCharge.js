@@ -4,13 +4,13 @@ const chargeRegisterSchema = require('../../validations/chargeRegisterSchema');
 const postCharge = async (req, res) => {
   const charge = req.body;
   const { id } = req.user;
-
+  console.log('POST');
   try {
     await chargeRegisterSchema.validate(charge);
     charge.usuario_id = id;
-    const newClient = await knex('cobrancas').insert(charge);
+    const newCharge = await knex('cobrancas').insert(charge);
 
-    if (!newClient.rowCount) {
+    if (!newCharge.rowCount) {
       return res
         .status(400)
         .json(
