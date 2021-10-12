@@ -19,7 +19,6 @@ const userLogin = async (req, res) => {
     const foundUser = isUser[0];
 
     const verifyPass = await bcrypt.compare(user.senha, foundUser.senha);
-    console.log(verifyPass);
     if (!verifyPass) {
       return res.status(400).json('Senha ou e-mail inválido.');
     }

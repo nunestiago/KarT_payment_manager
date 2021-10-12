@@ -4,7 +4,6 @@ const deleteCharge = async (req, res) => {
   const charge = req.body;
   try {
     const deleteCharge = await knex('cobrancas').where('id', charge.id).del();
-    console.log(deleteCharge);
     if (deleteCharge === 0) {
       return res
         .status(400)

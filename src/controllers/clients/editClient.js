@@ -53,7 +53,6 @@ const editClient = async (req, res) => {
 
     res.status(200).json('Cliente atualizado com sucesso');
   } catch (error) {
-    console.log(error.message);
     return res.status(400).json(error.message);
   }
 };
