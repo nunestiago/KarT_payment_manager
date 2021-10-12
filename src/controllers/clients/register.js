@@ -1,5 +1,5 @@
 const knex = require('../../config/knexConnect');
-const testeCPF = require('../../utils/cpfValidator');
+// const testeCPF = require('../../utils/cpfValidator');
 const clientRegisterSchema = require('../../validations/clientRegisterSchema');
 
 const clientRegister = async (req, res) => {
