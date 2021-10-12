@@ -23,9 +23,9 @@ const clientRegister = async (req, res) => {
       return res.status(400).json('CPF já cadastrado.');
     }
 
-    if (client.cpf && !testeCPF(client.cpf)) {
-      return res.status(400).json('CPF inválido');
-    }
+    // if (client.cpf && !testeCPF(client.cpf)) {
+    //   return res.status(400).json('CPF inválido');
+    // }
 
     const newClient = await knex('clientes').insert(client);
 
