@@ -41,6 +41,7 @@ const editClient = async (req, res) => {
       bairro: newInfo.bairro,
       cidade: newInfo.cidade,
       complemento: newInfo.complemento,
+      ponto_referencia: newInfo.ponto_referencia,
     };
 
     const editClient = await knex('clientes')
