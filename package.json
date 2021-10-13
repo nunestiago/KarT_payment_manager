@@ -9,8 +9,8 @@
   "scripts": {
     "migrate": "npx knex migrate:latest --knexfile config/knexConnect.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/app.js",
-    "start": "node ./src/app.js"
+    "dev": "export TZ=America/Sao_Paulo && nodemon ./src/app.js",
+    "start": "export TZ=America/Sao_Paulo && node ./src/app.js"
   },
   "keywords": [],
   "author": "",
