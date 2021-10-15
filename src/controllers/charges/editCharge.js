@@ -18,11 +18,12 @@ const editCharge = async (req, res) => {
     const editCharge = await knex('cobrancas')
       .update(infoToUpdate)
       .where('id', charge.id);
+
     if (editCharge === 0) {
       return res
         .status(400)
         .json(
-          'Erro ao tentar cadastrar cobrança, favor entrar em contato com suporte da KarT Devs.',
+          'Erro ao tentar editar cobrança, favor entrar em contato com suporte da KarT Devs.',
         );
     }
 
